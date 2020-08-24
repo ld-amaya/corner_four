@@ -1,0 +1,95 @@
+.container {
+	display: inline-block;
+	width: 80%;
+	height: 100vh;
+}
+
+#leftColumn{
+	font-family: 'Righteous', cursive;
+	font-size:2rem;
+	display:inline-block;
+	width:18%;
+	text-align: center;
+	vertical-align: top;
+	margin-top:20px;
+}
+
+.playerOneFont{
+	color:red;
+}
+.playerTwoFont{
+	color:blue;
+}
+
+.game {
+	width: 100%;
+	height: 100%;
+	border: 0;
+	border-spacing: 5px;
+	padding: 20px;
+}
+.row {
+	border: 1px solid red;
+}
+.colHead{
+	border:1px dashed red;
+	padding: 2px;
+	width: 12%;
+	height: 9vh;
+	cursor: pointer;
+	transition: ease-in 1s;
+}
+
+.col {
+	border: 1px solid black;
+	padding: 2px;
+	width: 12%;
+	height: 12%;
+}
+
+.playerHead1 {
+	width: 80%;
+	height: 9vh;
+	border-radius: 50%;
+	background-color: red;
+	margin: 0 auto;
+}
+
+.playerHead2 {
+	width: 80%;
+	height: 9vh;
+	border-radius: 50%;
+	background-color:blue;
+	margin: 0 auto;
+}
+
+.player1 {
+	width: 80%;
+	height: 9vh;
+	border-radius: 50%;
+	background-color: red;
+	margin: 0 auto;
+	animation-name:slidein;
+	animation-duration:1s;
+	animation-direction: alternate;
+}
+
+.player2 {
+	width: 80%;
+	height: 9vh;
+	border-radius: 50%;
+	background-color:blue;
+	margin: 0 auto;
+	animation-name:slidein;
+	animation-duration:1s;
+	animation-direction:alternate;
+}
+
+@keyframes slidein{
+	from{
+		margin-top:-800%;
+	}
+	to{
+		margin-top:0%;
+	}
+}
