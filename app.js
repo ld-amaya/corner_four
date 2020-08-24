@@ -38,7 +38,10 @@ headerRow.addEventListener('click', (e) => {
             }   
             player.textContent = nextPlayer();                                      //Set the next color / player
             selectFont();
-            allFilled() ? alert ('Game Over') : false;                              //Check if all squares are filled and there are no winners
+            if (allFilled()) {                                                      //Check if all squares are filled and there are no winners
+                alert ('Game Tie');
+                playOver.textContent = 'Game Over, game tie!';
+            }                                 
         }
     }
 });
