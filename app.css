@@ -93,3 +93,9 @@
 		margin-top:0%;
 	}
 }
+
+#playOver{
+	font-size:1.5rem;
+	color:tomato;
+	margin-top: 20px;
+}

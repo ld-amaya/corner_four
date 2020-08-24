@@ -2,7 +2,7 @@
 const headerRow = document.querySelector('.HeaderRow');
 const player = document.querySelector('#player');
 const allCol = document.querySelectorAll('.colHead');
-
+const playOver = document.querySelector('#playOver');
 const boards= [
     [null, null, null, null, null, null,null],
     [null, null, null, null, null, null,null],
@@ -11,8 +11,9 @@ const boards= [
     [null, null, null, null, null, null,null],
     [null, null, null, null, null, null,null],
 ];
+
 let msg ='';
-let myArray=[];
+
 
 allCol.forEach(item => {
     item.addEventListener('mouseenter',()=>{
@@ -24,17 +25,21 @@ allCol.forEach(item => {
 })
 
 headerRow.addEventListener('click', (e) => {
-    const col = e.target.parentNode.id;                                         //Assign targeted rowHead parentNode ID as column
-    const circle = document.createElement('div');                               //Create new element to insert circle to columns
-    circle.classList.toggle(getPlayer());                                       //Get the color according to player's color
-    if (row = getRowCol(col)) {                                                 //Get available td / row col if row is truthy
-        row.append(circle);                                                     //Append div to td selected
-        boards[row.dataset.row][row.dataset.col]= player.textContent;           //Update board array
-        if (checkWinner(player.textContent,row.dataset.row,row.dataset.col))   //Check if we have a winner
-            alert (`${player.textContent} player WINS on ${msg} combinations`);
-        player.textContent = nextPlayer();                                      //Set the next color / player
-        selectFont();
-        allFilled() ? alert ('Game Over') : false;                              //Check if all squares are filled and there are no winners
+    if (playOver.textContent === ''){
+        const col = e.target.parentNode.id;                                         //Assign targeted rowHead parentNode ID as column
+        const circle = document.createElement('div');                               //Create new element to insert circle to columns
+        circle.classList.toggle(getPlayer());                                       //Get the color according to player's color
+        if (row = getRowCol(col)) {                                                 //Get available td / row col if row is truthy
+            row.append(circle);                                                     //Append div to td selected
+            boards[row.dataset.row][row.dataset.col]= player.textContent;           //Update board array
+            if (checkWinner(player.textContent,row.dataset.row,row.dataset.col)){   //Check if we have a winner
+                alert (`${player.textContent} player WINS on ${msg} combinations`);
+                playOver.textContent = `Game Over ${player.textContent} wins`;
+            }   
+            player.textContent = nextPlayer();                                      //Set the next color / player
+            selectFont();
+            allFilled() ? alert ('Game Over') : false;                              //Check if all squares are filled and there are no winners
+        }
     }
 });
 
@@ -80,6 +85,7 @@ function allFilled(){
         return board.every((val) => val != null)                                //Return true if td is filled else return false
     }
 }
+
 //Check for winning combination
 function checkWinner(color,row,col){
      //Check horizontal combo
