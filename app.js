@@ -69,7 +69,6 @@ function makeBoard() {
     }
 }
 
-
 function gamePlay(e) {
     if (playOver.textContent === '') {
         const col = e.target.parentNode.id; //Assign targeted rowHead parentNode ID as column
@@ -78,12 +77,11 @@ function gamePlay(e) {
         if (row = getRowCol(col)) { //Get available td / row col if row is truthy
             row.append(circle); //Append div to td selected
             boards[row.dataset.row][row.dataset.col] = player.textContent; //Update board array
-            if (checkWinner(player.textContent, row.dataset.row, row.dataset.col)) { //Check if we have a winner
+            if (checkWinner(row.dataset.row, row.dataset.col)) { //Check if we have a winner
+                playOver.textContent = `${player.textContent} player WINS on ${msg}`;
                 setTimeout(() => {
-                    alert(`${player.textContent} player WINS on ${msg} combinations`);
+                    alert(playOver.textContent);
                 }, 800);
-
-                playOver.textContent = `Game Over ${player.textContent} wins`;
             }
             player.textContent = nextPlayer(); //Set the next color / player
             selectFont();
@@ -133,43 +131,68 @@ function getRowCol(col) { //Get the next vacant row number based on the column s
     return false; //Return false or falsey if no empty td on column selected
 }
 
-//Check if all board is filled
+//Check if all last row of the board is filled
 function allFilled() {
-    // for (let board of boards) { //Loop through every subarray in the board array
     return boards[0].every((val) => val != null) //Return true if td is filled else return false
-    // }
 }
 
 //Check for winning combination
-function checkWinner(color, row, col) {
-    //Check Horizontal Winner
+function checkWinner(row, col) {
+    if (checkHorizontalWin(row)) return true;
+    if (checkVerticalWin(col)) return true;
+    if (checkSlashWin()) return true;
+    if (checkBackslashWin()) return true;
+}
+
+//Check Horizontal Winner
+function checkHorizontalWin(row) {
     for (let i = 0; i < WIDTH; i++) {
         const horizontal = [boards[row][i], boards[row][i + 1], boards[row][i + 2], boards[row][i + 3]];
-        if (checkWin(horizontal)) return true;
-    }
-    //Check Vertical Winner
-    for (let i = 0; i < HEIGHT / 2; i++) {
-        const vertical = [boards[i][col], boards[i + 1][col], boards[i + 2][col], boards[i + 3][col]];
-        if (checkWin(vertical)) return true;
-    }
-
-    //Check Slash Win
-    for (let col = 0; col < WIDTH; col++) {
-        for (let row = HEIGHT - 1; row >= HEIGHT / 2; row--) {
-            const checkSlashPattern = [boards[row][col], boards[row - 1][col + 1], boards[row - 2][col + 2], boards[row - 3][col + 3]];
-            if (checkWin(checkSlashPattern)) return true;
-        }
-    }
-
-    //Check Backslash Win
-    for (let col = 0; col < WIDTH; col++) {
-        for (let row = 0; row < HEIGHT / 2; row++) {
-            const checkBackslashPattern = [boards[row][col], boards[row + 1][col + 1], boards[row + 2][col + 2], boards[row + 3][col + 3]];
-            if (checkWin(checkBackslashPattern)) return true;
+        if (checkWin(horizontal)) {
+            msg = 'Horizontal combination';
+            return true;
         }
     }
 }
 
+//Check Vertical Winner
+function checkVerticalWin(col) {
+    for (let i = 0; i < HEIGHT / 2; i++) {
+        const vertical = [boards[i][col], boards[i + 1][col], boards[i + 2][col], boards[i + 3][col]];
+        if (checkWin(vertical)) {
+            msg = 'Vertical combination'
+            return true;
+        }
+    }
+}
+
+//Check Slash Winner
+function checkSlashWin() {
+    for (let col = 0; col < WIDTH; col++) {
+        for (let row = HEIGHT - 1; row >= HEIGHT / 2; row--) {
+            const checkSlashPattern = [boards[row][col], boards[row - 1][col + 1], boards[row - 2][col + 2], boards[row - 3][col + 3]];
+            if (checkWin(checkSlashPattern)) {
+                msg = 'Diagonal slash combination';
+                return true;
+            }
+        }
+    }
+}
+
+// Check Backslash Win
+function checkBackslashWin() {
+    for (let col = 0; col < WIDTH; col++) {
+        for (let row = 0; row < HEIGHT / 2; row++) {
+            const checkBackslashPattern = [boards[row][col], boards[row + 1][col + 1], boards[row + 2][col + 2], boards[row + 3][col + 3]];
+            if (checkWin(checkBackslashPattern)) {
+                msg = 'Diagonal Backslash combination';
+                return true;
+            }
+        }
+    }
+}
+
+//Check Winning combination
 function checkWin(combination) {
     return combination.every(cell => cell === player.textContent);
 }
