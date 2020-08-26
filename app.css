@@ -1,3 +1,12 @@
+td {
+	border-radius: 50%;
+}
+tr {
+	border: 1px solid black;
+}
+table {
+	border: 1px solid black;
+}
 .container {
 	display: inline-block;
 	width: 80%;
@@ -23,11 +32,10 @@
 }
 
 .game {
-	width: 100%;
-	height: 100%;
-	border: 0;
+	border: 1px solid black;
 	border-spacing: 5px;
-	padding: 20px;
+	padding: 10px;
+	background-color: rgb(112, 73, 0);
 }
 
 .row {
@@ -37,54 +45,58 @@
 .colHead {
 	border: 1px dashed red;
 	padding: 2px;
-	width: 12%;
-	height: 9vh;
 	cursor: pointer;
 	transition: ease-in 1s;
+	background-color: white;
 }
 
 .col {
 	border: 1px solid black;
 	padding: 2px;
-	width: 12%;
-	height: 12%;
+	background-color: white;
 }
 
 .playerHead1 {
-	width: 80%;
-	height: 9vh;
+	width: 100%;
+	height: 100%;
 	border-radius: 50%;
 	background-color: red;
 	margin: 0 auto;
 }
 
+.playerRed {
+	background-color: red;
+}
+.playerBlue {
+	background-color: blue;
+}
 .playerHead2 {
-	width: 80%;
-	height: 9vh;
+	width: 100%;
+	height: 100%;
 	border-radius: 50%;
 	background-color: blue;
 	margin: 0 auto;
 }
 
 .player1 {
-	width: 80%;
-	height: 9vh;
+	width: 100%;
+	height: 100%;
 	border-radius: 50%;
 	background-color: red;
 	margin: 0 auto;
 	animation-name: slidein;
-	animation-duration: 1s;
+	animation-duration: 200ms;
 	animation-direction: alternate;
 }
 
 .player2 {
-	width: 80%;
-	height: 9vh;
+	width: 100%;
+	height: 100%;
 	border-radius: 50%;
 	background-color: blue;
 	margin: 0 auto;
 	animation-name: slidein;
-	animation-duration: 1s;
+	animation-duration: 200ms;
 	animation-direction: alternate;
 }
 
