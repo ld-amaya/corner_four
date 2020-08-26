@@ -1,187 +1,175 @@
+//Create the game board
+const WIDTH = 7;
+const HEIGHT = 6;
+createBoard();
 // Variable Declarations 
-const headerRow = document.querySelector('.HeaderRow');
-const player = document.querySelector('#player');
+
 const allCol = document.querySelectorAll('.colHead');
+const player = document.querySelector('#player');
 const playOver = document.querySelector('#playOver');
-const boards= [
-    [null, null, null, null, null, null,null],
-    [null, null, null, null, null, null,null],
-    [null, null, null, null, null, null,null],
-    [null, null, null, null, null, null,null],
-    [null, null, null, null, null, null,null],
-    [null, null, null, null, null, null,null],
-];
+let boards = [];
+let msg = '';
 
-let msg ='';
-
-
+//Add event listener to hide and show game piece
 allCol.forEach(item => {
-    item.addEventListener('mouseenter',()=>{
+    item.addEventListener('mouseenter', () => {
         showGamePiece(item);
     })
-    item.addEventListener('mouseleave',()=>{
+    item.addEventListener('mouseleave', () => {
         hideGamePiece(item);
     })
 })
 
-headerRow.addEventListener('click', (e) => {
-    if (playOver.textContent === ''){
-        const col = e.target.parentNode.id;                                         //Assign targeted rowHead parentNode ID as column
-        const circle = document.createElement('div');                               //Create new element to insert circle to columns
-        circle.classList.toggle(getPlayer());                                       //Get the color according to player's color
-        if (row = getRowCol(col)) {                                                 //Get available td / row col if row is truthy
-            row.append(circle);                                                     //Append div to td selected
-            boards[row.dataset.row][row.dataset.col]= player.textContent;           //Update board array
-            if (checkWinner(player.textContent,row.dataset.row,row.dataset.col)){   //Check if we have a winner
-                alert (`${player.textContent} player WINS on ${msg} combinations`);
-                playOver.textContent = `Game Over ${player.textContent} wins`;
-            }   
-            player.textContent = nextPlayer();                                      //Set the next color / player
-            selectFont();
-            if (allFilled()) {                                                      //Check if all squares are filled and there are no winners
-                alert ('Game Tie');
-                playOver.textContent = 'Game Over, game tie!';
-            }                                 
-        }
-    }
-});
+//Call function to make board
+makeBoard();
 
-function getPlayer() {                                                          //Get the current player's color to display
-    return player.textContent === 'Red' ?'player1' : 'player2';
+// Create the game board
+function createBoard() {
+    const board = document.querySelector('.game');
+    const rows = document.createElement('tr');
+
+    //Create the head row
+    rows.setAttribute('id', 'HeaderRow');
+    rows.classList.add('row');
+    rows.addEventListener('click', (e) => {
+        gamePlay(e);
+    });
+
+    //Create the header column and append to header row
+    for (let col = 0; col < WIDTH; col++) {
+        const cols = document.createElement('td');
+        cols.setAttribute('id', `c${col}`);
+        cols.classList.add('colHead');
+        rows.append(cols);
+    }
+
+    // Append to board
+    board.append(rows);
+
+    //Create the remaining boards
+    for (let myRow = 0; myRow < HEIGHT; myRow++) {
+        const row = document.createElement('tr');
+        for (let myCol = 0; myCol < WIDTH; myCol++) {
+            const cols = document.createElement('td');
+            cols.setAttribute('id', `r${myRow}c${myCol}`);
+            cols.dataset.row = myRow;
+            cols.dataset.col = myCol;
+            cols.classList.add('col');
+            row.append(cols);
+        }
+        board.append(row);
+    }
 }
 
-function nextPlayer() {                                                         //Set the next player
+function makeBoard() {
+    for (let row = 0; row < HEIGHT; row++) {
+        boards.push(Array.from({
+            length: WIDTH
+        }));
+    }
+}
+
+
+function gamePlay(e) {
+    if (playOver.textContent === '') {
+        const col = e.target.parentNode.id; //Assign targeted rowHead parentNode ID as column
+        const circle = document.createElement('div'); //Create new element to insert circle to columns
+        circle.classList.toggle(getPlayer()); //Get the color according to player's color
+        if (row = getRowCol(col)) { //Get available td / row col if row is truthy
+            row.append(circle); //Append div to td selected
+            boards[row.dataset.row][row.dataset.col] = player.textContent; //Update board array
+            if (checkWinner(player.textContent, row.dataset.row, row.dataset.col)) { //Check if we have a winner
+                setTimeout(() => {
+                    alert(`${player.textContent} player WINS on ${msg} combinations`);
+                }, 800);
+
+                playOver.textContent = `Game Over ${player.textContent} wins`;
+            }
+            player.textContent = nextPlayer(); //Set the next color / player
+            selectFont();
+            if (allFilled()) { //Check if all squares are filled and there are no winners
+                alert('Game Tie');
+                setInterval(() => {
+                    playOver.textContent = 'Game Over, game tie!';
+                }, 800);
+            }
+        }
+    }
+}
+
+function getPlayer() { //Get the current player's color to display
+    return player.textContent === 'Red' ? 'player1' : 'player2';
+}
+
+function nextPlayer() { //Set the next player
     return player.textContent === 'Red' ? 'Blue' : 'Red';
 }
 
-function showGamePiece(colHead){
+function showGamePiece(colHead) {
     const circle = document.createElement('div');
-    player.textContent ==='Red' ? circle.classList.toggle('playerHead1') : circle.classList.toggle('playerHead2')
+    player.textContent === 'Red' ? circle.classList.toggle('playerHead1') : circle.classList.toggle('playerHead2')
     colHead.append(circle);
 }
 
-function hideGamePiece(colHead){
-    if(colHead.querySelector('.playerHead1')) colHead.querySelector('.playerHead1').remove();
-    if(colHead.querySelector('.playerHead2')) colHead.querySelector('.playerHead2').remove();
+function hideGamePiece(colHead) {
+    if (colHead.querySelector('.playerHead1')) colHead.querySelector('.playerHead1').remove();
+    if (colHead.querySelector('.playerHead2')) colHead.querySelector('.playerHead2').remove();
 }
 
-function selectFont(){
+function selectFont() {
     player.classList.toggle('playerOneFont');
     player.classList.toggle('playerTwoFont');
 }
 
-function getRowCol(col){                                                        //Get the next vacant row number based on the column selected
-    for (let i=(boards.length-1) ; i>=0; i--){
-        const row = document.querySelector(`#r${i}${col}`);                     //Get the selected td / row and col
+function getRowCol(col) { //Get the next vacant row number based on the column selected
+    for (let i = (boards.length - 1); i >= 0; i--) {
+        const row = document.querySelector(`#r${i}${col}`); //Get the selected td / row and col
         try {
-            if (row.innerHTML === '') return row;                                   //Return row if empty to fill with player color
+            if (row.innerHTML === '') return row; //Return row if empty to fill with player color
         } catch {
 
         }
     }
-    return false;                                                               //Return false or falsey if no empty td on column selected
+    return false; //Return false or falsey if no empty td on column selected
 }
 
 //Check if all board is filled
-function allFilled(){
-    for (let board of boards){                                                  //Loop through every subarray in the board array
-        return board.every((val) => val != null)                                //Return true if td is filled else return false
-    }
+function allFilled() {
+    // for (let board of boards) { //Loop through every subarray in the board array
+    return boards[0].every((val) => val != null) //Return true if td is filled else return false
+    // }
 }
 
 //Check for winning combination
-function checkWinner(color,row,col){
-     //Check horizontal combo
-     let winner= false;
-     if (winner = checkHorizontalCombo(color,row)) return winner;               //Check if there is four straight colors in horizontal
-     if (winner = checkVerticalCombo(color,col)) return winner;                 //Check if there is four straight colors in vertical
-     if (winner = checkDiagonalCombo(color,row,col)) return winner;             //Check if there is four straight colors in diagonal
-     return winner;
-}
+function checkWinner(color, row, col) {
+    //Check Horizontal Winner
+    for (let i = 0; i < WIDTH; i++) {
+        const horizontal = [boards[row][i], boards[row][i + 1], boards[row][i + 2], boards[row][i + 3]];
+        if (checkWin(horizontal)) return true;
+    }
+    //Check Vertical Winner
+    for (let i = 0; i < HEIGHT / 2; i++) {
+        const vertical = [boards[i][col], boards[i + 1][col], boards[i + 2][col], boards[i + 3][col]];
+        if (checkWin(vertical)) return true;
+    }
 
-function checkHorizontalCombo(color,row){                                       //Check horizontal combination win
-    let winCount = 0;
-    let win = false;                                                            //Initialize win to false;
-    boards[row].forEach((board)=>{                                              //loop through each board of the row selected
-        if (board === color){
-            winCount ++;                                                        //Add wincount if board is the same as player color
-            if (winCount === 4) {
-                win = true;                                                     //Assign win = true, wining combination found
-                msg = "Horizontal combo";    
-            }                                   //Set msg to winning combination format
-        } else {
-            winCount = 0;                                                       //Reset winCount if board is not the same as the player color
-        }
-    });
-    return win;                                                                 //Return value of win
-}
-
-function checkVerticalCombo(color,col){                                         //Check vertical combination win
-    let winCount = 0;
-    let win = false;                                                            //Initialize win to false
-    for (let row =0 ;row<boards.length;row++){
-        if (boards[row][col]===color){                                          //Loop through each board of the column selected
-            winCount ++;                                                         //Add winCount if board is the same as the player color
-            if (winCount === 4) {
-                win = true;                                                     //Assign win = true, wining combination found
-                msg = "Vertical combo";                                         //Set msg to winning combination format
-            }
-        } else {
-            winCount = 0;                                                       //Reset winCount if board is not the same as the player color
+    //Check Slash Win
+    for (let col = 0; col < WIDTH; col++) {
+        for (let row = HEIGHT - 1; row >= HEIGHT / 2; row--) {
+            const checkSlashPattern = [boards[row][col], boards[row - 1][col + 1], boards[row - 2][col + 2], boards[row - 3][col + 3]];
+            if (checkWin(checkSlashPattern)) return true;
         }
     }
-    return win;                                                                 //Return value of win
-}
 
-function checkDiagonalCombo(color,row,col){
-    if (checkSlashPattern(color)) {
-        msg = 'Diagonal slash combo';
-        return true;
-    }
-    if (checkBackslashPattern(color)) {
-        msg = 'Diagonal backslash combo';
-        return true;
-    }
-}
-
-function checkSlashPattern(color){                                              //Check diagonal slash combination win
-    for (let row= boards.length-1; row>=0; row--){                             //Start calculating from the bottom, row=6
-        for (let col = 0; col < boards[row].length; col ++){
-            let nextRow = row;
-            let winCount = 0;
-            for (let nextCol =col; nextCol<boards[row].length; nextCol++){
-                if (nextRow >= 0){
-                    if (boards[nextRow][nextCol]===color){                      //Loop through each board of the column selected
-                        winCount ++;                                            //Add winCount if board is the same as the player color
-                        if (winCount === 4) return true;                        //Return true, wining combination found
-                    } else {
-                        winCount = 0;                                           //Reset winCount if board is not the same as the player color
-                    }
-                    nextRow --;                                                 //Go to next row
-                }
-            }
+    //Check Backslash Win
+    for (let col = 0; col < WIDTH; col++) {
+        for (let row = 0; row < HEIGHT / 2; row++) {
+            const checkBackslashPattern = [boards[row][col], boards[row + 1][col + 1], boards[row + 2][col + 2], boards[row + 3][col + 3]];
+            if (checkWin(checkBackslashPattern)) return true;
         }
     }
-    return false;                                                               //Return false if there is no winning combination
 }
 
-function checkBackslashPattern(color){                                          //Check diagonal backslash combination win
-    for (let row= 0; row< boards.length-1; row++){                              //Start calculating from the top
-        for (let col = 0; col < boards[row].length; col ++){
-            let nextRow = row;
-            let winCount = 0;
-            for (let nextCol=col; nextCol<boards[row].length; nextCol++){
-                if (nextRow < boards[row].length-1){
-                    if (boards[nextRow][nextCol]===color){                      //Loop through each board of the column selected
-                        winCount ++;                                            //Add winCount if board is the same as the player color
-                        if (winCount === 4) return true;                        //Return true, wining combination found
-                    } else {
-                        winCount = 0;                                           //Reset winCount if board is not the same as the player color
-                    }
-                    nextRow ++;                                                 //Go to next row
-                }
-            }
-        }
-    }
-    return false;                                                               //Return false if there is no winning combination
+function checkWin(combination) {
+    return combination.every(cell => cell === player.textContent);
 }

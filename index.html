@@ -1,84 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="jasmine/jasmine.css">
     <link rel="stylesheet" href="app.css">
     <title>Four Corners Game</title>
 </head>
+
 <body>
     <div id="leftColumn">
-        <div id='play'> Play <span class = 'playerOneFont' id='player'>Red</span> </div>
+        <div id='play'> Play <span class='playerOneFont' id='player'>Red</span> </div>
         <div id='playOver'></div>
     </div>
     <div class="container">
-        <table class="game">
-            <tr class="row HeaderRow">
-                <td class="colHead" id = 'c0'></td>
-                <td class="colHead" id = 'c1'></td>
-                <td class="colHead" id = 'c2'></td>
-                <td class="colHead" id = 'c3'></td>
-                <td class="colHead" id = 'c4'></td>
-                <td class="colHead" id = 'c5'></td>
-                <td class="colHead" id = 'c6'></td>
-            </tr>
-            <tr class="row">
-                <td class="col" id = 'r0c0' data-row = 0 data-col=0></td>
-                <td class="col" id = 'r0c1' data-row = 0 data-col=1></td>
-                <td class="col" id = 'r0c2' data-row = 0 data-col=2></td>
-                <td class="col" id = 'r0c3' data-row = 0 data-col=3></td>
-                <td class="col" id = 'r0c4' data-row = 0 data-col=4></td>
-                <td class="col" id = 'r0c5' data-row = 0 data-col=5></td>
-                <td class="col" id = 'r0c6' data-row = 0 data-col=6></td>
-            </tr>
-            <tr class="row">
-                <td class="col" id = 'r1c0' data-row = 1 data-col=0></td>
-                <td class="col" id = 'r1c1' data-row = 1 data-col=1></td>
-                <td class="col" id = 'r1c2' data-row = 1 data-col=2></td>
-                <td class="col" id = 'r1c3' data-row = 1 data-col=3></td>
-                <td class="col" id = 'r1c4' data-row = 1 data-col=4></td>
-                <td class="col" id = 'r1c5' data-row = 1 data-col=5></td>
-                <td class="col" id = 'r1c6' data-row = 1 data-col=6></td>
-            </tr>
-            <tr class="row">
-                <td class="col" id = 'r2c0' data-row = 2 data-col=0></td>
-                <td class="col" id = 'r2c1' data-row = 2 data-col=1></td>
-                <td class="col" id = 'r2c2' data-row = 2 data-col=2></td>
-                <td class="col" id = 'r2c3' data-row = 2 data-col=3></td>
-                <td class="col" id = 'r2c4' data-row = 2 data-col=4></td>
-                <td class="col" id = 'r2c5' data-row = 2 data-col=5></td>
-                <td class="col" id = 'r2c6' data-row = 2 data-col=6></td>
-            </tr>
-            <tr class="row">
-                <td class="col" id = 'r3c0' data-row = 3 data-col=0></td>
-                <td class="col" id = 'r3c1' data-row = 3 data-col=1></td>
-                <td class="col" id = 'r3c2' data-row = 3 data-col=2></td>
-                <td class="col" id = 'r3c3' data-row = 3 data-col=3></td>
-                <td class="col" id = 'r3c4' data-row = 3 data-col=4></td>
-                <td class="col" id = 'r3c5' data-row = 3 data-col=5></td>
-                <td class="col" id = 'r3c6' data-row = 3 data-col=6></td>
-            </tr>
-            <tr class="row">
-                <td class="col" id = 'r4c0' data-row = 4 data-col=0></td>
-                <td class="col" id = 'r4c1' data-row = 4 data-col=1></td>
-                <td class="col" id = 'r4c2' data-row = 4 data-col=2></td>
-                <td class="col" id = 'r4c3' data-row = 4 data-col=3></td>
-                <td class="col" id = 'r4c4' data-row = 4 data-col=4></td>
-                <td class="col" id = 'r4c5' data-row = 4 data-col=5></td>
-                <td class="col" id = 'r4c6' data-row = 4 data-col=6></td>
-            </tr>
-            <tr class="row">
-                <td class="col" id = 'r5c0' data-row = 5 data-col=0></td>
-                <td class="col" id = 'r5c1' data-row = 5 data-col=1></td>
-                <td class="col" id = 'r5c2' data-row = 5 data-col=2></td>
-                <td class="col" id = 'r5c3' data-row = 5 data-col=3></td>
-                <td class="col" id = 'r5c4' data-row = 5 data-col=4></td>
-                <td class="col" id = 'r5c5' data-row = 5 data-col=5></td>
-                <td class="col" id = 'r5c6' data-row = 5 data-col=6></td>
-            </tr>
-        </table>
+        <table class='game'></table>
     </div>
-    <script src ='app.js'></script>  
+    <script src='jasmine/jasmine.js'></script>
+    <script src='jasmine/jasmine-html.js'></script>
+    <script src='jasmine/boot.js'></script>
+    <script src='app.js'></script>
+    <script src='app.test.js'></script>
 </body>
+
 </html>

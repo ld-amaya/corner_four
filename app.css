@@ -4,21 +4,22 @@
 	height: 100vh;
 }
 
-#leftColumn{
+#leftColumn {
 	font-family: 'Righteous', cursive;
-	font-size:2rem;
-	display:inline-block;
-	width:18%;
+	font-size: 2rem;
+	display: inline-block;
+	width: 18%;
 	text-align: center;
 	vertical-align: top;
-	margin-top:20px;
+	margin-top: 20px;
 }
 
-.playerOneFont{
-	color:red;
+.playerOneFont {
+	color: blue;
 }
-.playerTwoFont{
-	color:blue;
+
+.playerTwoFont {
+	color: red;
 }
 
 .game {
@@ -28,11 +29,13 @@
 	border-spacing: 5px;
 	padding: 20px;
 }
+
 .row {
 	border: 1px solid red;
 }
-.colHead{
-	border:1px dashed red;
+
+.colHead {
+	border: 1px dashed red;
 	padding: 2px;
 	width: 12%;
 	height: 9vh;
@@ -59,7 +62,7 @@
 	width: 80%;
 	height: 9vh;
 	border-radius: 50%;
-	background-color:blue;
+	background-color: blue;
 	margin: 0 auto;
 }
 
@@ -69,8 +72,8 @@
 	border-radius: 50%;
 	background-color: red;
 	margin: 0 auto;
-	animation-name:slidein;
-	animation-duration:1s;
+	animation-name: slidein;
+	animation-duration: 1s;
 	animation-direction: alternate;
 }
 
@@ -78,24 +81,25 @@
 	width: 80%;
 	height: 9vh;
 	border-radius: 50%;
-	background-color:blue;
+	background-color: blue;
 	margin: 0 auto;
-	animation-name:slidein;
-	animation-duration:1s;
-	animation-direction:alternate;
+	animation-name: slidein;
+	animation-duration: 1s;
+	animation-direction: alternate;
 }
 
-@keyframes slidein{
-	from{
-		margin-top:-800%;
+@keyframes slidein {
+	from {
+		margin-top: -800%;
 	}
-	to{
-		margin-top:0%;
+
+	to {
+		margin-top: 0%;
 	}
 }
 
-#playOver{
-	font-size:1.5rem;
-	color:tomato;
+#playOver {
+	font-size: 1.5rem;
+	color: tomato;
 	margin-top: 20px;
 }
