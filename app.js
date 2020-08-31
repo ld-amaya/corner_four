@@ -1,4 +1,3 @@
-//Create the game board
 const WIDTH = 9;
 const HEIGHT = 7;
 createBoard();
@@ -96,15 +95,17 @@ function gamePlay(e) {
 				row.append(circle); //Append div to td selected
 				setTimeout(() => {
 					thisPlayer === 'Red' ? row.classList.add('playerRed') : row.classList.add('playerBlue');
-					player.textContent = nextPlayer(); //Set the next color / player
-					selectFont();
 				}, 200);
 				boards[row.dataset.row][row.dataset.col] = thisPlayer; //Update board array
 				if (checkWinner(row.dataset.row, row.dataset.col)) {
 					//Check if we have a winner
 					setTimeout(() => {
 						alert(`${thisPlayer} player WINS on ${msg}`);
+						playOver.textContent = `${thisPlayer} player WINS`;
 					}, 200);
+				} else {
+					player.textContent = nextPlayer(); //Set the next color / player
+					selectFont();
 				}
 				if (allFilled()) {
 					//Check if all squares are filled and there are no winners
@@ -185,7 +186,7 @@ function checkWinner(row, col) {
 //Check Horizontal Winner
 function checkHorizontalWin(row) {
 	for (let i = 0; i < WIDTH; i++) {
-		const horizontal = [ boards[row][i], boards[row][i + 1], boards[row][i + 2], boards[row][i + 3] ];
+		const horizontal = [boards[row][i], boards[row][i + 1], boards[row][i + 2], boards[row][i + 3]];
 		if (checkWin(horizontal)) {
 			msg = 'Horizontal combination';
 			return true;
@@ -196,7 +197,7 @@ function checkHorizontalWin(row) {
 //Check Vertical Winner
 function checkVerticalWin(col) {
 	for (let i = 0; i < HEIGHT / 2; i++) {
-		const vertical = [ boards[i][col], boards[i + 1][col], boards[i + 2][col], boards[i + 3][col] ];
+		const vertical = [boards[i][col], boards[i + 1][col], boards[i + 2][col], boards[i + 3][col]];
 		if (checkWin(vertical)) {
 			msg = 'Vertical combination';
 			return true;
